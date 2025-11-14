@@ -72,7 +72,7 @@ bash -c "$(curl -sSL https://s.mytesla.cc/install.sh)"
 
 #### Mytesla UI推荐
 
-在成功部署 TeslaMate 后，强烈推荐您使用 [Mytesla UI](https://mytesla.cc/login)， 现代化新数据看板日常使用可以替换掉 grafana：
+在成功部署 TeslaMate 后，强烈推荐您使用 [Mytesla UI](https://mytesla.cc)， 现代化新数据看板日常使用可以替换掉 grafana：
 
 Mytesla UI 特色功能
 * **实时车辆监控**  电池状态实时显示  充电进度跟踪 位置信息监控
