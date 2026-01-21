@@ -1,0 +1,197 @@
+services:
+  # ForwardAuth service for Cookie-based authentication
+  auth:
+    image: docker.1ms.run/mytesla/auth:latest
+    restart: unless-stopped
+    environment:
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=admin123
+      - SECRET_KEY=mytesla-secret-key-change-me
+      - CONFIG_PATH=/data/config.json
+    volumes:
+      - auth-data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.auth.loadbalancer.server.port=8080"
+      # Login/Logout routes
+      - "traefik.http.routers.auth-login.rule=PathPrefix(`/login`) || PathPrefix(`/logout`)"
+      - "traefik.http.routers.auth-login.entrypoints=web"
+      - "traefik.http.routers.auth-login.priority=100"
+      # Settings route
+      - "traefik.http.routers.auth-settings.rule=PathPrefix(`/settings`)"
+      - "traefik.http.routers.auth-settings.entrypoints=web"
+      - "traefik.http.routers.auth-settings.priority=100"
+      # ForwardAuth middleware definition
+      - "traefik.http.middlewares.forward-auth.forwardauth.address=http://auth:8080/auth"
+      - "traefik.http.middlewares.forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+
+  traefik:
+    image: docker.1ms.run/traefik:v3.6
+    restart: unless-stopped
+    command:
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --log.level=INFO
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+    depends_on:
+      - auth
+
+  teslamate:
+    image: docker.1ms.run/mytesla/teslamate:v2.2
+    restart: always
+    depends_on:
+      - database
+      - mosquitto
+    environment:
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=teslamate
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+      - MQTT_HOST=mosquitto
+      - ENCRYPTION_KEY=your-encryption-key-change-me
+      - TZ=Asia/Shanghai
+      - CHECK_ORIGIN=false
+      - URL_PATH=/teslamate
+      - MYTESLA_SELF_HOST=true
+    volumes:
+      - ./data/teslamate/import:/opt/app/import
+    cap_drop:
+      - all
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.teslamate.loadbalancer.server.port=4000"
+      - "traefik.http.middlewares.teslamate-strip.stripprefix.prefixes=/teslamate"
+      # Public routes (no auth)
+      - "traefik.http.routers.teslamate-public.rule=PathPrefix(`/teslamate/static`) || PathRegexp(`^/teslamate/.*\\.(png|jpg|jpeg|gif|ico|svg|webp|css|js)$$`)"
+      - "traefik.http.routers.teslamate-public.entrypoints=web"
+      - "traefik.http.routers.teslamate-public.middlewares=teslamate-strip"
+      - "traefik.http.routers.teslamate-public.priority=20"
+      # WebSocket routes (no auth)
+      - "traefik.http.routers.teslamate-ws.rule=PathPrefix(`/teslamate/live/websocket`)"
+      - "traefik.http.routers.teslamate-ws.entrypoints=web"
+      - "traefik.http.routers.teslamate-ws.middlewares=teslamate-strip"
+      - "traefik.http.routers.teslamate-ws.priority=15"
+      # Protected routes (with ForwardAuth)
+      - "traefik.http.routers.teslamate.rule=PathPrefix(`/teslamate`)"
+      - "traefik.http.routers.teslamate.entrypoints=web"
+      - "traefik.http.routers.teslamate.middlewares=forward-auth,teslamate-strip"
+      - "traefik.http.routers.teslamate.priority=10"
+
+  database:
+    image: docker.1ms.run/postgres:18-trixie
+    restart: always
+    environment:
+      - POSTGRES_USER=teslamate
+      - POSTGRES_PASSWORD=teslamate
+      - POSTGRES_DB=teslamate
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  grafana:
+    image: docker.1ms.run/mytesla/grafana:v2.2
+    restart: always
+    depends_on:
+      - database
+    environment:
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=teslamate
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+      - GRAFANA_PASSWD=admin123
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_USERS_DEFAULT_LANGUAGE=zh-CN
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+    volumes:
+      - grafana-data:/var/lib/grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+
+  mosquitto:
+    image: docker.1ms.run/eclipse-mosquitto:2
+    restart: always
+    command: mosquitto -c /mosquitto-no-auth.conf
+    volumes:
+      - ./data/mosquitto/config:/mosquitto/config
+      - ./data/mosquitto/data:/mosquitto/data
+
+  teslamateapi:
+    image: docker.1ms.run/mytesla/teslamateapi:latest
+    restart: unless-stopped
+    ports:
+      - "3030:8080"
+    depends_on:
+      - database
+      - teslamate
+      - mosquitto
+    environment:
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=teslamate
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+      - ENCRYPTION_KEY=your-encryption-key-change-me
+      - MQTT_HOST=mosquitto
+    volumes:
+      - teslamateapi-data:/opt/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.teslamateapi.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.teslamateapi-panel-rewrite.replacepathregex.regex=^/panel(.*)"
+      - "traefik.http.middlewares.teslamateapi-panel-rewrite.replacepathregex.replacement=/api/panel$${1}"
+      - "traefik.http.routers.teslamateapi-panel.rule=PathPrefix(`/panel`)"
+      - "traefik.http.routers.teslamateapi-panel.entrypoints=web"
+      - "traefik.http.routers.teslamateapi-panel.middlewares=teslamateapi-panel-rewrite"
+
+  dash:
+    image: docker.1ms.run/mytesla/dash:latest
+    restart: unless-stopped
+    depends_on:
+      - teslamateapi
+      - env-adapter
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.dash.loadbalancer.server.port=3000"
+      # Public routes (no auth) - PWA assets
+      - "traefik.http.routers.dash-public.rule=Path(`/manifest.json`) || PathPrefix(`/images`) || PathRegexp(`^/.*\\.(png|jpg|jpeg|gif|ico|svg|webp)$$`)"
+      - "traefik.http.routers.dash-public.entrypoints=web"
+      - "traefik.http.routers.dash-public.priority=20"
+      - "traefik.http.middlewares.dash-redirect.redirectregex.regex=^/$$"
+      - "traefik.http.middlewares.dash-redirect.redirectregex.replacement=/dashboard"
+      # Protected routes (with ForwardAuth)
+      - "traefik.http.routers.dash.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.dash.entrypoints=web"
+      - "traefik.http.routers.dash.middlewares=forward-auth,dash-redirect"
+      - "traefik.http.routers.dash.priority=1"
+
+  env-adapter:
+    image: docker.1ms.run/mytesla/env-adapter:latest
+    restart: unless-stopped
+    volumes:
+      - /etc/machine-id:/etc/machine-id:ro
+      - /proc/cpuinfo:/proc/cpuinfo:ro
+      - env-adapter-data:/app/storage:rw
+    depends_on:
+      - teslamateapi
+
+volumes:
+  auth-data:
+  teslamateapi-data:
+  grafana-data:
+  postgres-data:
+  env-adapter-data:
+
+networks:
+  default:
+    name: teslamate-network
