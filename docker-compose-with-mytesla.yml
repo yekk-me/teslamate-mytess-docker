@@ -143,6 +143,7 @@ services:
       - DATABASE_HOST=database
       - ENCRYPTION_KEY=your-encryption-key-change-me
       - MQTT_HOST=mosquitto
+      - API_TOKEN=oewi#$jfi343943#@$#@
     volumes:
       - teslamateapi-data:/opt/app/data
     labels:
