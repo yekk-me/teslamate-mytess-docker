@@ -92,7 +92,7 @@ services:
       - POSTGRES_PASSWORD=teslamate
       - POSTGRES_DB=teslamate
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql
 
   grafana:
     image: docker.1ms.run/mytesla/grafana:v2.2
