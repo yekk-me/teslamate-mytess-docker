@@ -153,4 +153,88 @@ docker compose -f docker-compose-with-mytesla.yml up -d
   - 统一入口: `http://your-ip` （默认跳转到 Dashboard）
   - TeslaMate: `http://your-ip/teslamate`
   - Grafana: `http://your-ip/grafana`
+  - TeslaMate API: `http://your-ip/mytesla/api` （无需认证）
   - 默认登录: 用户名 `admin` / 密码 `admin123`（可在 `http://your-ip/settings` 设置页面修改）
+
+---
+
+## ⚠️ 重要：安全配置
+
+在生产环境部署前，**务必修改**以下重要的环境变量，否则可能导致安全风险：
+
+### 🔐 必须修改的环境变量
+
+编辑 `docker-compose-with-mytesla.yml` 文件，修改以下配置：
+
+#### 1. Auth 服务登录凭据
+```yaml
+auth:
+  environment:
+    - AUTH_USERNAME=admin          # ⚠️ 修改为你的用户名
+    - AUTH_PASSWORD=admin123       # ⚠️ 修改为强密码
+    - SECRET_KEY=mytesla-secret-key-change-me  # ⚠️ 修改为随机字符串（至少 32 位）
+```
+
+#### 2. TeslaMate 加密密钥
+```yaml
+teslamate:
+  environment:
+    - ENCRYPTION_KEY=your-encryption-key-change-me  # ⚠️ 修改为随机字符串（至少 32 位）
+```
+
+#### 3. 数据库密码
+```yaml
+database:
+  environment:
+    - POSTGRES_PASSWORD=teslamate  # ⚠️ 修改为强密码
+
+teslamate:
+  environment:
+    - DATABASE_PASS=teslamate      # ⚠️ 与数据库密码保持一致
+```
+
+#### 4. Grafana 管理员密码
+```yaml
+grafana:
+  environment:
+    - GRAFANA_PASSWD=admin123      # ⚠️ 修改为强密码
+    - GF_SECURITY_ADMIN_PASSWORD=admin123  # ⚠️ 修改为强密码
+```
+
+#### 5. TeslaMate API Token
+```yaml
+teslamateapi:
+  environment:
+    - API_TOKEN=PLEASE-CHANGE-THIS-API-TOKEN-IN-PRODUCTION  # ⚠️ 修改为随机字符串
+    - ENCRYPTION_KEY=your-encryption-key-change-me  # ⚠️ 与 TeslaMate 的加密密钥保持一致
+```
+
+### 💡 安全建议
+
+- **生成随机密钥**：使用以下命令生成安全的随机字符串
+  ```bash
+  # Linux/macOS
+  openssl rand -base64 32
+
+  # 或者
+  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+  ```
+
+- **强密码要求**：
+  - 至少 12 位字符
+  - 包含大小写字母、数字和特殊字符
+  - 避免使用常见密码或个人信息
+
+- **定期更换密码**：建议每 3-6 个月更换一次关键密码
+
+- **备份加密密钥**：`ENCRYPTION_KEY` 用于加密敏感数据（如 Tesla API Token），丢失后无法恢复数据
+
+### 修改后重启服务
+
+```bash
+# 停止服务
+docker compose -f docker-compose-with-mytesla.yml down
+
+# 重新启动
+docker compose -f docker-compose-with-mytesla.yml up -d
+```

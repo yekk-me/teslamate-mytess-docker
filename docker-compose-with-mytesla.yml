@@ -143,7 +143,7 @@ services:
       - DATABASE_HOST=database
       - ENCRYPTION_KEY=your-encryption-key-change-me
       - MQTT_HOST=mosquitto
-      - API_TOKEN=oewi#$jfi343943#@$#@
+      - API_TOKEN=PLEASE-CHANGE-THIS-API-TOKEN-IN-PRODUCTION
     volumes:
       - teslamateapi-data:/opt/app/data
     labels:
@@ -154,6 +154,12 @@ services:
       - "traefik.http.routers.teslamateapi-panel.rule=PathPrefix(`/panel`)"
       - "traefik.http.routers.teslamateapi-panel.entrypoints=web"
       - "traefik.http.routers.teslamateapi-panel.middlewares=teslamateapi-panel-rewrite"
+      # /mytesla/api routes (no auth) - forward to teslamateapi /api
+      - "traefik.http.middlewares.teslamateapi-mytesla-strip.stripprefix.prefixes=/mytesla"
+      - "traefik.http.routers.teslamateapi-mytesla.rule=PathPrefix(`/mytesla/api`)"
+      - "traefik.http.routers.teslamateapi-mytesla.entrypoints=web"
+      - "traefik.http.routers.teslamateapi-mytesla.middlewares=teslamateapi-mytesla-strip"
+      - "traefik.http.routers.teslamateapi-mytesla.priority=30"
 
   dash:
     image: docker.1ms.run/mytesla/dash:latest
