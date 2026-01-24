@@ -167,6 +167,8 @@ services:
     depends_on:
       - teslamateapi
       - env-adapter
+    environment:
+          NEXT_PUBLIC_AMAP_KEY: amap_key
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.dash.loadbalancer.server.port=3000"
