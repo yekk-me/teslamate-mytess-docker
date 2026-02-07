@@ -28,22 +28,30 @@ docker compose up -d
 
 **Best for**: Users outside mainland China, or those preferring official images.
 
-### Option 2: Mytesla Optimized Version (Recommended for China)
-Uses Mytesla-optimized images with China-specific fixes.
+### Option 2: Mytesla Enhanced Version (Recommended)
+Official TeslaMate/Grafana with Mytesla enhancement components.
 
 ```bash
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
-**Additional features:**
-- OpenStreetMap proxy (solves map loading in China)
-- Baidu Maps geocoding support
-- Chinese-localized Grafana dashboards
-- Traefik reverse proxy with unified authentication
-- Modern Mytesla Dash web interface
-- All services from official version
+**Image composition:**
+- **TeslaMate**: `teslamate/teslamate:v2.2` (official)
+- **Grafana**: `teslamate/grafana:v2.2` (official)
+- **Mytesla components**:
+  - `mytesla/auth` - Unified authentication service
+  - `mytesla/dash` - Modern web dashboard
+  - `mytesla/teslamateapi` - Enhanced API (full Mytess support)
+  - `mytesla/env-adapter` - Environment adapter
 
-**Best for**: Users in mainland China experiencing map loading issues.
+**Additional features:**
+- Traefik reverse proxy with unified authentication
+- Modern Mytesla Dash web interface (mobile-friendly)
+- Enhanced TeslaMateAPI with full Mytess iOS app support
+- Single-port access to all services (port 80)
+- Production-ready security architecture
+
+**Best for**: Users wanting modern web interface, mobile app integration, and unified authentication.
 
 **Note**: Mytesla Dash requires a one-time authorization. For licensing inquiries, contact hi@mytesla.cc.
 

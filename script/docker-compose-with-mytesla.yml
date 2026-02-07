@@ -46,7 +46,7 @@ services:
       - auth
 
   teslamate:
-    image: mytesla/teslamate:v2.2
+    image: teslamate/teslamate:v2.2
     restart: always
     depends_on:
       - database
@@ -97,7 +97,7 @@ services:
       - postgres-data:/var/lib/postgresql
 
   grafana:
-    image: mytesla/grafana:v2.2
+    image: teslamate/grafana:v2.2
     restart: always
     depends_on:
       - database
@@ -110,7 +110,6 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin123
       - GF_AUTH_ANONYMOUS_ENABLED=false
-      - GF_USERS_DEFAULT_LANGUAGE=zh-CN
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
     volumes:

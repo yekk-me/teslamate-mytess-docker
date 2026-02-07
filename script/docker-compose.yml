@@ -1,6 +1,6 @@
 services:
   teslamate:
-    image: teslamate/teslamate:latest
+    image: teslamate/teslamate:v2.2
     restart: always
     environment:
       - ENCRYPTION_KEY=your-encryption-key-change-me
@@ -27,7 +27,7 @@ services:
       - teslamate-db:/var/lib/postgresql/data
 
   grafana:
-    image: teslamate/grafana:latest
+    image: teslamate/grafana:v2.2
     restart: always
     environment:
       - DATABASE_USER=teslamate

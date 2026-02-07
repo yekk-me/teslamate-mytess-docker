@@ -85,8 +85,8 @@ docker compose up -d
 
 **Note**: May experience map loading issues in mainland China.
 
-### Option 2: Mytesla Optimized Version (Recommended for China)
-Uses Mytesla-optimized images with China-specific enhancements.
+### Option 2: Mytesla Enhanced Version (Recommended)
+Official TeslaMate/Grafana with Mytesla enhancement components.
 
 ```bash
 git clone https://github.com/gococonut/teslamate-cn-image.git
@@ -101,12 +101,18 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 - TeslaMateAPI: `http://your-ip/mytesla/api`
 - Default login: `admin` / `admin123`
 
-**Mytesla version improvements**:
-- Built-in OpenStreetMap proxy (solves map loading in China)
-- Baidu Maps support for accurate geocoding
-- Pre-configured Chinese Grafana dashboards
-- Modern Mytesla Dash web interface
-- Unified authentication (Traefik + ForwardAuth)
+**Image composition**:
+- TeslaMate: `teslamate/teslamate:v2.2` (official)
+- Grafana: `teslamate/grafana:v2.2` (official)
+- Mytesla components: Auth, Dash, TeslaMateAPI, Env-Adapter
+
+**Mytesla version advantages**:
+- Official TeslaMate/Grafana for latest updates
+- Traefik reverse proxy with unified authentication
+- Modern Mytesla Dash web interface (mobile-friendly)
+- Enhanced TeslaMateAPI (full Mytess iOS app support)
+- Single-port access to all services
+- Production-ready security architecture
 
 ## Connecting Mytess to Your TeslaMate
 
