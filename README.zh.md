@@ -34,8 +34,8 @@ docker compose up -d
 
 **注意**: 官方版本在中国大陆可能遇到地图加载问题。
 
-### 方式二：Mytesla 版本（推荐）
-在官方 TeslaMate/Grafana 基础上，增加 Mytesla 增强组件。
+### 方式二：Mytesla 版本（中国用户推荐）
+使用 Mytesla 优化镜像，专门解决中国大陆使用问题。
 
 ```bash
 git clone https://github.com/yekk-me/teslamate-mytess-docker.git
@@ -44,23 +44,28 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
 **镜像说明**:
-- TeslaMate: `teslamate/teslamate:v2.2` (官方)
-- Grafana: `teslamate/grafana:v2.2` (官方)
+- TeslaMate: `mytesla/teslamate:v2.2` （中国优化版，推荐）
+- Grafana: `mytesla/grafana:v2.2` （中国优化版，推荐）
 - Mytesla 增强组件:
   - `mytesla/auth` - 统一认证服务
   - `mytesla/dash` - 现代化看板界面
   - `mytesla/teslamateapi` - 增强版 API（支持 Mytess 应用）
   - `mytesla/env-adapter` - 环境适配器
 
-**Mytesla 版本的优势**:
-- ✓ 使用官方 TeslaMate 和 Grafana，保持更新
+**Mytesla 镜像解决的问题**:
+- ✓ **地图加载问题**: 内置 OpenStreetMap 代理，解决中国大陆地图无法加载
+- ✓ **百度地图支持**: 集成百度地图逆地理编码，位置信息更准确
+- ✓ **中文优化**: 界面完整中文化，预配置中文 Grafana 仪表盘
+- ✓ **网络优化**: 解决部分服务在中国访问慢的问题
+
+**额外功能**:
 - ✓ Traefik 反向代理 + 统一认证系统
 - ✓ 现代化的 Mytesla Dash 看板界面（移动端友好）
 - ✓ 增强版 TeslaMateAPI（完整支持 Mytess iOS 应用）
 - ✓ 简化配置，一个端口统一访问所有服务
 - ✓ 生产环境就绪的安全架构
 
-**适用场景**: 需要移动端访问、统一认证、现代化界面的用户
+**适用场景**: 中国大陆用户、需要移动端访问、统一认证、现代化界面的用户
 
 ## Mytess iOS 应用
 
