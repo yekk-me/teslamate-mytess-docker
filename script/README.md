@@ -155,7 +155,7 @@ This will output a 32-character random string. Use this for `ENCRYPTION_KEY`, `S
 - **Dashboard**: `http://your-ip/`
 - **TeslaMate**: `http://your-ip/teslamate`
 - **Grafana**: `http://your-ip/grafana`
-- **TeslaMateAPI**: `http://your-ip/mytesla/api` (no auth required)
+- **TeslaMateAPI**: `http://your-ip/mytesla/api` (requires API token)
 - **Settings**: `http://your-ip/settings` (change auth credentials)
 - **Default login**: `admin` / `admin123`
 
