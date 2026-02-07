@@ -6,8 +6,8 @@ This directory contains Docker Compose configurations for deploying TeslaMate.
 
 ## Files
 
-- `docker-compose.yml` - Official TeslaMate version (international users)
-- `docker-compose-with-mytesla.yml` - Mytesla optimized version (recommended for China)
+- `docker-compose.yml` - Official TeslaMate version (basic setup)
+- `docker-compose-with-mytesla.yml` - Mytesla enhanced version (recommended)
 - `images/` - Dashboard screenshots
 
 ## Quick Deployment
@@ -241,9 +241,9 @@ docker compose ps
 
 ### Map Not Loading
 
-- Built-in proxy included for China users to access OpenStreetMap
-- Mytesla Dash version includes Baidu Maps support for better China coverage
-- Check TeslaMate logs if map still doesn't load: `docker compose logs teslamate`
+- Check TeslaMate logs: `docker compose logs teslamate`
+- Verify network connectivity to OpenStreetMap servers
+- Ensure no firewall blocking external map tile requests
 
 ### Database Connection Failed
 

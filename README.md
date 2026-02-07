@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README.zh.md)
 
-> Quick deployment scripts for TeslaMate with Mytess integration - optimized for mainland China
+> Quick deployment scripts for TeslaMate with Mytess integration
 
 ## About Mytess
 
@@ -59,12 +59,12 @@ All data stays on your own server with no third-party data sharing. Direct conne
 This repository provides:
 - Docker Compose configurations for TeslaMate deployment
 - Pre-configured TeslaMateAPI for Mytess iOS app connectivity
-- Optimized for mainland China (OpenStreetMap proxy, Baidu Maps)
+- Enhanced deployment with modern web interface and unified authentication
 
 ## Why These Deployment Scripts?
 
-- **China-Specific Optimizations**: Solves OpenStreetMap access issues and includes Baidu Maps support
 - **Mytess-Ready**: Pre-configured TeslaMateAPI for seamless Mytess app connectivity
+- **Modern Interface**: Optional Mytesla Dash with unified authentication
 - **One-Command Deployment**: Get TeslaMate running in minutes
 
 ## Quick Start
@@ -82,8 +82,6 @@ docker compose up -d
 - TeslaMate: `http://your-ip:4000`
 - Grafana: `http://your-ip:3000`
 - TeslaMateAPI: `http://your-ip:3030`
-
-**Note**: May experience map loading issues in mainland China.
 
 ### Option 2: Mytesla Enhanced Version (Recommended)
 Official TeslaMate/Grafana with Mytesla enhancement components.
@@ -195,8 +193,8 @@ Includes Traefik reverse proxy for unified authentication and modern web dashboa
 - Ensure URL format is correct (include http://)
 
 ### Map not loading in TeslaMate
-- Built-in proxy included for China users
-- Mytesla Dash version includes Baidu Maps support
+- Check TeslaMate logs if map doesn't load: `docker compose logs teslamate`
+- Verify network connectivity to OpenStreetMap servers
 
 ## Documentation
 
@@ -229,5 +227,4 @@ A: Yes! All data stays on your own server. Mytess connects directly to your Tesl
 ## Related Projects
 
 - **TeslaMate**: [github.com/adriankumpf/teslamate](https://github.com/adriankumpf/teslamate)
-- **TeslaMateAPI**: [github.com/tobiasehlert/teslamateapi](https://github.com/tobiasehlert/teslamateapi)
 - **Mytess**: [mytess.net](https://mytess.net) - Native iOS app for TeslaMate
