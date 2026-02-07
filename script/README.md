@@ -315,4 +315,4 @@ docker compose stats
 
 - **Discord**: [https://discord.com/invite/2DBzQfFPW8](https://discord.com/invite/2DBzQfFPW8)
 - **Email**: hi@mytesla.cc
-- **GitHub Issues**: [Report a problem](https://github.com/gococonut/teslamate-cn-image/issues)
+- **GitHub Issues**: [Report a problem](https://github.com/yekk-me/teslamate-mytess-docker/issues)

@@ -27,8 +27,8 @@
 使用 TeslaMate 官方镜像，适合国际用户使用。
 
 ```bash
-git clone https://github.com/gococonut/teslamate-cn-image.git
-cd teslamate-cn-image/script
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose up -d
 ```
 
@@ -38,8 +38,8 @@ docker compose up -d
 在官方 TeslaMate/Grafana 基础上，增加 Mytesla 增强组件。
 
 ```bash
-git clone https://github.com/gococonut/teslamate-cn-image.git
-cd teslamate-cn-image/script
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
@@ -79,5 +79,5 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 
 - **Mytess iOS 应用:** [mytess.net](https://mytess.net)
 - **TeslaMate 官方文档:** [docs.teslamate.org](https://docs.teslamate.org)
-- **问题反馈:** [GitHub Issues](https://github.com/gococonut/teslamate-cn-image/issues)
+- **问题反馈:** [GitHub Issues](https://github.com/yekk-me/teslamate-mytess-docker/issues)
 - **社区支持:** [Discord](https://discord.com/invite/2DBzQfFPW8)

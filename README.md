@@ -73,8 +73,8 @@ This repository provides:
 Uses official TeslaMate images. Suitable for international users.
 
 ```bash
-git clone https://github.com/gococonut/teslamate-cn-image.git
-cd teslamate-cn-image/script
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose up -d
 ```
 
@@ -87,8 +87,8 @@ docker compose up -d
 Official TeslaMate/Grafana with Mytesla enhancement components.
 
 ```bash
-git clone https://github.com/gococonut/teslamate-cn-image.git
-cd teslamate-cn-image/script
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
