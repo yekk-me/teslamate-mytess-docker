@@ -23,19 +23,33 @@
 
 详细部署说明请参阅 [英文文档](README.md)。
 
-### 基础部署
+### 方式一：官方版本（国际用户）
+使用 TeslaMate 官方镜像，适合国际用户使用。
+
 ```bash
 git clone https://github.com/gococonut/teslamate-cn-image.git
 cd teslamate-cn-image/script
 docker compose up -d
 ```
 
-### 包含 Mytesla Dash
+**注意**: 官方版本在中国大陆可能遇到地图加载问题。
+
+### 方式二：Mytesla 版本（推荐中国用户）
+使用 Mytesla 优化镜像，专门解决中国大陆使用问题。
+
 ```bash
 git clone https://github.com/gococonut/teslamate-cn-image.git
 cd teslamate-cn-image/script
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
+
+**Mytesla 版本解决的问题**:
+- ✓ 内置 OpenStreetMap 代理，解决地图无法加载问题
+- ✓ 支持百度地图逆地理编码，位置信息更准确
+- ✓ 中文界面优化
+- ✓ 预配置的 Grafana 仪表盘（中文）
+- ✓ 统一认证系统（Traefik + ForwardAuth）
+- ✓ 现代化的 Mytesla Dash 看板界面
 
 ## Mytess iOS 应用
 

@@ -69,7 +69,9 @@ This repository provides:
 
 ## Quick Start
 
-### Option 1: Basic TeslaMate
+### Option 1: Official TeslaMate (International Users)
+Uses official TeslaMate images. Suitable for international users.
+
 ```bash
 git clone https://github.com/gococonut/teslamate-cn-image.git
 cd teslamate-cn-image/script
@@ -81,7 +83,11 @@ docker compose up -d
 - Grafana: `http://your-ip:3000`
 - TeslaMateAPI: `http://your-ip:3030`
 
-### Option 2: With Mytesla Dash (Recommended)
+**Note**: May experience map loading issues in mainland China.
+
+### Option 2: Mytesla Optimized Version (Recommended for China)
+Uses Mytesla-optimized images with China-specific enhancements.
+
 ```bash
 git clone https://github.com/gococonut/teslamate-cn-image.git
 cd teslamate-cn-image/script
@@ -94,6 +100,13 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 - Grafana: `http://your-ip/grafana`
 - TeslaMateAPI: `http://your-ip/mytesla/api`
 - Default login: `admin` / `admin123`
+
+**Mytesla version improvements**:
+- Built-in OpenStreetMap proxy (solves map loading in China)
+- Baidu Maps support for accurate geocoding
+- Pre-configured Chinese Grafana dashboards
+- Modern Mytesla Dash web interface
+- Unified authentication (Traefik + ForwardAuth)
 
 ## Connecting Mytess to Your TeslaMate
 

@@ -6,34 +6,44 @@ This directory contains Docker Compose configurations for deploying TeslaMate.
 
 ## Files
 
-- `docker-compose.yml` - Basic version (TeslaMate + Grafana + TeslaMateAPI)
-- `docker-compose-with-mytesla.yml` - With Mytesla Dash (modern web interface + unified auth)
+- `docker-compose.yml` - Official TeslaMate version (international users)
+- `docker-compose-with-mytesla.yml` - Mytesla optimized version (recommended for China)
 - `images/` - Dashboard screenshots
 
 ## Quick Deployment
 
-### Option 1: Basic Version
+### Option 1: Official Version (International Users)
+Uses official TeslaMate and Grafana images.
+
 ```bash
 docker compose up -d
 ```
 
 **Services included:**
-- TeslaMate web interface
+- TeslaMate web interface (official)
 - PostgreSQL database
-- Grafana dashboards
+- Grafana dashboards (official)
 - TeslaMateAPI (for mobile apps like Mytess)
 - Mosquitto MQTT broker
 
-### Option 2: With Mytesla Dash
+**Best for**: Users outside mainland China, or those preferring official images.
+
+### Option 2: Mytesla Optimized Version (Recommended for China)
+Uses Mytesla-optimized images with China-specific fixes.
+
 ```bash
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
-**Additional services:**
-- Traefik reverse proxy
-- Unified authentication
-- Modern web dashboard
-- All services from basic version
+**Additional features:**
+- OpenStreetMap proxy (solves map loading in China)
+- Baidu Maps geocoding support
+- Chinese-localized Grafana dashboards
+- Traefik reverse proxy with unified authentication
+- Modern Mytesla Dash web interface
+- All services from official version
+
+**Best for**: Users in mainland China experiencing map loading issues.
 
 ## Configuration
 
