@@ -67,6 +67,35 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 
 **适用场景**: 中国大陆用户、需要移动端访问、统一认证、现代化界面的用户
 
+### 配置百度地图（可选，推荐）
+
+为了获得更准确的逆地址解析（位置名称），建议配置百度地图密钥：
+
+1. **申请百度地图密钥**
+   - 访问 [百度地图开放平台](https://lbsyun.baidu.com/)
+   - 注册并创建应用
+   - 获取 AK（Access Key）和 SK（Secret Key）
+
+2. **添加环境变量**
+
+编辑 `docker-compose-with-mytesla.yml`，在 `teslamate` 服务中添加：
+
+```yaml
+teslamate:
+  environment:
+    - BD_MAP_AK=your-baidu-map-ak-here
+    - BD_MAP_SK=your-baidu-map-sk-here
+```
+
+3. **重启服务**
+
+```bash
+docker compose -f docker-compose-with-mytesla.yml down
+docker compose -f docker-compose-with-mytesla.yml up -d
+```
+
+配置后，TeslaMate 将使用百度地图进行逆地址解析，位置信息会更加准确（如"北京市朝阳区xxx"而不是英文地址）。
+
 ## Mytess iOS 应用
 
 **Mytess** 是一款原生 iOS 应用,可将您的 TeslaMate 数据转化为可操作的洞察。

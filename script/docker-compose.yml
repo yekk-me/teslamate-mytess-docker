@@ -24,7 +24,7 @@ services:
       - POSTGRES_PASSWORD=teslamate
       - POSTGRES_DB=teslamate
     volumes:
-      - teslamate-db:/var/lib/postgresql/data
+      - teslamate-db:/var/lib/postgresql
 
   grafana:
     image: teslamate/grafana:v2.2
