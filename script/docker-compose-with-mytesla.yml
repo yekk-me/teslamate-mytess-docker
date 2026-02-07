@@ -58,7 +58,6 @@ services:
       - DATABASE_HOST=database
       - MQTT_HOST=mosquitto
       - ENCRYPTION_KEY=your-encryption-key-change-me
-      - TZ=Asia/Shanghai
       - CHECK_ORIGIN=false
       - URL_PATH=/teslamate
       - MYTESLA_SELF_HOST=true
