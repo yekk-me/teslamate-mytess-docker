@@ -48,30 +48,28 @@ services:
       - mosquitto-data:/mosquitto/data
 
   teslamateapi:
-    image: tobiasehlert/teslamateapi:latest
-    restart: always
+    image: mytesla/teslamateapi:latest
+    restart: unless-stopped
     depends_on:
       - database
+      - teslamate
+      - mosquitto
     environment:
       - DATABASE_USER=teslamate
       - DATABASE_PASS=teslamate
       - DATABASE_NAME=teslamate
       - DATABASE_HOST=database
-      - MQTT_HOST=mosquitto
-      - TZ=UTC
-      - ENABLE_COMMANDS=true
-      - API_TOKEN_DISABLE=false
       - ENCRYPTION_KEY=your-encryption-key-change-me
+      - MQTT_HOST=mosquitto
+      - API_TOKEN=PLEASE-CHANGE-THIS-API-TOKEN-IN-PRODUCTION
     ports:
-      - "8080:8080"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+      - "3030:8080"
+    volumes:
+      - teslamateapi-data:/opt/app/data
 
 volumes:
   teslamate-db:
   teslamate-grafana-data:
+  teslamateapi-data:
   mosquitto-conf:
   mosquitto-data:

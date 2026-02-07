@@ -81,7 +81,7 @@ docker compose up -d
 **Access points:**
 - TeslaMate: `http://your-ip:4000`
 - Grafana: `http://your-ip:3000`
-- TeslaMateAPI: `http://your-ip:8080`
+- TeslaMateAPI: `http://your-ip:3030`
 
 **Note**: May experience map loading issues in mainland China.
 
@@ -117,7 +117,7 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 ## Connecting Mytess to Your TeslaMate
 
 1. **Find your TeslaMateAPI endpoint**
-   - Basic version: `http://your-ip:8080`
+   - Basic version: `http://your-ip:3030`
    - Mytesla Dash version: `http://your-ip/mytesla/api`
 
 2. **Open Mytess app**

@@ -103,7 +103,7 @@ This will output a 32-character random string. Use this for `ENCRYPTION_KEY`, `S
 │                                                              │
 │  ┌──────────┐   ┌──────────┐   ┌──────────┐                │
 │  │TeslaMate │   │ Grafana  │   │   API    │                │
-│  │  :4000   │   │  :3000   │   │  :8080   │                │
+│  │  :4000   │   │  :3000   │   │  :3030   │                │
 │  └────┬─────┘   └────┬─────┘   └────┬─────┘                │
 │       │              │              │                        │
 │       └──────────────┼──────────────┘                        │
@@ -148,7 +148,7 @@ This will output a 32-character random string. Use this for `ENCRYPTION_KEY`, `S
 ### Basic Version
 - **TeslaMate**: `http://your-ip:4000`
 - **Grafana**: `http://your-ip:3000` (default: admin/admin)
-- **TeslaMateAPI**: `http://your-ip:8080`
+- **TeslaMateAPI**: `http://your-ip:3030`
 
 ### Mytesla Dash Version
 - **Unified entry**: `http://your-ip` (redirects to Dashboard)
@@ -163,7 +163,7 @@ This will output a 32-character random string. Use this for `ENCRYPTION_KEY`, `S
 
 ### Step 1: Note Your TeslaMateAPI Endpoint
 
-- **Basic version**: `http://your-server-ip:8080`
+- **Basic version**: `http://your-server-ip:3030`
 - **Mytesla Dash version**: `http://your-server-ip/mytesla/api`
 
 Replace `your-server-ip` with:
