@@ -15,45 +15,40 @@
 
 ### Key Features
 
-#### 🔋 Battery Health Monitoring
-Track battery capacity degradation over time and visualize charging patterns and efficiency.
+#### Smart Drive Insights
+Analyze your driving efficiency with "Golden Foot" scoring, safety distance analysis, and low temperature regeneration alerts.
 
 <p align="center">
-  <img src="https://www.mytess.net/screenshots/showcase/battery-health.png" width="250" alt="Battery Health">
+  <img src="https://www.mytess.net/screenshots/showcase/insights/en/91shots_so.png" width="250" alt="Drive Insights">
+  <img src="https://www.mytess.net/screenshots/showcase/insights/en/181shots_so.png" width="250" alt="Drive Analysis">
 </p>
 
-#### 🚗 Smart Drive Insights
-- "Golden Foot" efficiency scoring
-- Safety distance analysis
-- Low temperature regeneration alerts
+#### Intelligent Charging Cost Calculation
+Geofence-based automatic location identification with time-of-use (ToU) pricing support. Batch cost updates for historical data.
 
 <p align="center">
-  <img src="https://www.mytess.net/screenshots/showcase/drive-insights.png" width="250" alt="Drive Insights">
+  <img src="https://www.mytess.net/screenshots/showcase/costManagement/en/640shots_so.png" width="250" alt="Charging Costs">
+  <img src="https://www.mytess.net/screenshots/showcase/costManagement/en/297shots_so.png" width="250" alt="Cost Management">
 </p>
 
-#### 💰 Intelligent Charging Cost Calculation
-- Geofence-based automatic location identification
-- Time-of-use (ToU) pricing support
-- Batch cost updates for historical data
+#### Interactive Map Mode
+Visualize all drive routes on map with timeline selector for trip exploration and detailed elevation insights.
 
 <p align="center">
-  <img src="https://www.mytess.net/screenshots/showcase/charging-costs.png" width="250" alt="Charging Costs">
+  <img src="https://www.mytess.net/screenshots/showcase/mapMode/en/721shots_so.png" width="250" alt="Map Mode">
+  <img src="https://www.mytess.net/screenshots/showcase/mapMode/en/258shots_so.png" width="250" alt="Route Visualization">
 </p>
 
-#### 🗺️ Interactive Map Mode
-- Visualize all drive routes on map
-- Timeline selector for trip exploration
-- Trip detail view with elevation insights
+#### Real-time Notifications
+Charging status alerts with Live Activity support on Dynamic Island and navigation sync.
 
-#### 🔔 Real-time Notifications
-- Charging status alerts
-- Live Activity support on Dynamic Island
-- Navigation sync
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/showcase/notifications/en/491shots_so.png" width="250" alt="Notifications">
+  <img src="https://www.mytess.net/screenshots/showcase/notifications/en/94shots_so.png" width="250" alt="Live Activity">
+</p>
 
-#### 🔒 Privacy First
-- All data stays on your own server
-- No third-party data sharing
-- Direct connection to your TeslaMate
+#### Privacy First
+All data stays on your own server with no third-party data sharing. Direct connection to your TeslaMate instance.
 
 **Download:** [App Store](https://apps.apple.com/app/id6757828502) | **Website:** [mytess.net](https://mytess.net)
 

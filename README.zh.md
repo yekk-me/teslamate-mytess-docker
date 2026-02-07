@@ -14,10 +14,10 @@
 
 ## 主要特性
 
-- ✅ 一键部署 TeslaMate
-- ✅ 预配置 TeslaMateAPI (用于 Mytess 应用连接)
-- ✅ 支持 Mytesla Dash 现代化看板
-- ✅ Traefik 反向代理和统一认证
+- 一键部署 TeslaMate
+- 预配置 TeslaMateAPI (用于 Mytess 应用连接)
+- 支持 Mytesla Dash 现代化看板
+- Traefik 反向代理和统一认证
 
 ## 快速开始
 
@@ -42,12 +42,11 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 **Mytess** 是一款原生 iOS 应用,可将您的 TeslaMate 数据转化为可操作的洞察。
 
 ### 主要功能
-- 🔋 电池健康监控
-- 🚗 智能驾驶洞察 ("金脚"评分、安全距离分析)
-- 💰 智能充电成本计算 (地理围栏、峰谷电价)
-- 🗺️ 交互式地图模式
-- 🔔 实时通知 (充电状态、灵动岛支持)
-- 🔒 隐私优先 (数据保存在您自己的服务器)
+- 智能驾驶洞察 ("金脚"评分、安全距离分析)
+- 智能充电成本计算 (地理围栏、峰谷电价)
+- 交互式地图模式
+- 实时通知 (充电状态、灵动岛支持)
+- 隐私优先 (数据保存在您自己的服务器)
 
 **下载:** [App Store](https://apps.apple.com/app/id6757828502) | **官网:** [mytess.net](https://mytess.net)
 
