@@ -45,6 +45,8 @@ docker compose -f docker-compose-with-mytesla.yml up -d
 
 **Best for**: Users in mainland China experiencing map loading issues.
 
+**Note**: Mytesla Dash requires a one-time authorization. For licensing inquiries, contact hi@mytesla.cc.
+
 ## Configuration
 
 ### Required Environment Variables

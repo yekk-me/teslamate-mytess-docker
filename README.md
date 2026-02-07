@@ -211,6 +211,9 @@ A: No, these deployment scripts are completely free. Mytess is a separate $9.9 i
 **Q: What's the difference between Grafana and Mytesla Dash?**
 A: Grafana provides detailed data visualization with customizable dashboards. Mytesla Dash is a modern, mobile-friendly alternative with unified authentication and simpler setup.
 
+**Q: Does Mytesla Dash require a license?**
+A: Yes, Mytesla Dash requires a one-time authorization. For licensing inquiries, please contact hi@mytesla.cc.
+
 **Q: Can I use Mytess with my existing TeslaMate installation?**
 A: Yes! You only need TeslaMateAPI running. See the [deployment guide](script/README.md) for adding TeslaMateAPI to existing setups.
 
