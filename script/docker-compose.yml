@@ -1,6 +1,6 @@
 services:
   teslamate:
-    image: docker.1ms.run/mytesla/teslamate:v2.2
+    image: teslamate/teslamate:v2.2
     restart: always
     environment:
       - ENCRYPTION_KEY=your-encryption-key-change-me
@@ -17,17 +17,17 @@ services:
       - all
 
   database:
-    image: docker.1ms.run/postgres:18-trixie
+    image: postgres:18-trixie
     restart: always
     environment:
       - POSTGRES_USER=teslamate
       - POSTGRES_PASSWORD=teslamate
       - POSTGRES_DB=teslamate
     volumes:
-      - teslamate-db:/var/lib/postgresql/data
+      - teslamate-db:/var/lib/postgresql
 
   grafana:
-    image: docker.1ms.run/mytesla/grafana:v2.2
+    image: teslamate/grafana:v2.2
     restart: always
     environment:
       - DATABASE_USER=teslamate
@@ -40,15 +40,36 @@ services:
       - teslamate-grafana-data:/var/lib/grafana
 
   mosquitto:
-    image: docker.1ms.run/eclipse-mosquitto:2
+    image: eclipse-mosquitto:2
     restart: always
     command: mosquitto -c /mosquitto-no-auth.conf
     volumes:
       - mosquitto-conf:/mosquitto/config
       - mosquitto-data:/mosquitto/data
 
+  teslamateapi:
+    image: mytesla/teslamateapi:latest
+    restart: unless-stopped
+    depends_on:
+      - database
+      - teslamate
+      - mosquitto
+    environment:
+      - DATABASE_USER=teslamate
+      - DATABASE_PASS=teslamate
+      - DATABASE_NAME=teslamate
+      - DATABASE_HOST=database
+      - ENCRYPTION_KEY=your-encryption-key-change-me
+      - MQTT_HOST=mosquitto
+      - API_TOKEN=PLEASE-CHANGE-THIS-API-TOKEN-IN-PRODUCTION
+    ports:
+      - "3030:8080"
+    volumes:
+      - teslamateapi-data:/opt/app/data
+
 volumes:
   teslamate-db:
   teslamate-grafana-data:
+  teslamateapi-data:
   mosquitto-conf:
   mosquitto-data:

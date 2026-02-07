@@ -1,240 +1,230 @@
-<!-- README.md -->
+# Mytess TeslaMate Deployment Scripts
 
-# 🇨🇳 TeslaMate-CN-Docker
+[English](README.md) | [中文](README.zh.md)
 
-[![Docker Version](https://img.shields.io/badge/docker-%3E%3D%2020.10-brightgreen)](https://docs.docker.com/)
-[![Map Proxy](https://img.shields.io/badge/map-proxy-brightgreen)](https://openstreetmap.org)
-[![GitHub stars](https://img.shields.io/github/stars/gococonut/teslamate-cn-docker?style=social)](https://github.com/yourname/teslamate-cn-docker)
+> Quick deployment scripts for TeslaMate with Mytess integration
 
-> 中国大陆可用的 TeslaMate 容器化方案 Teslamate 汉化 Teslamate 中文| TeslaMate Docker Solution for Mainland China
+## About Mytess
 
-> [镜像 Repository](https://github.com/gococonut/teslamate)
+**Mytess** is a beautiful native iOS app that transforms your TeslaMate data into actionable insights on your iPhone.
 
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/en/hero-1.png" width="300" alt="Mytess Dashboard">
+  <img src="https://www.mytess.net/screenshots/en/hero-2.png" width="300" alt="Mytess Drive Insights">
+</p>
 
-**强烈推荐** Teslamate iOS app：[Mytess](https://mytess.net)
-## 🌟 特性 Features
+### Key Features
 
-* ✅ ​**完整汉化** - 界面全面中文化（汉化中）
-* 🗺️ ​**地图访问** - 内置代理服务器解决 OpenStreetMap 访问问题
-* 🗺️ ​**百度地图** - 支持百度地址逆地址解析，车辆位置信息更精准
-* 🐳 ​**一键部署** - Docker Compose 一键部署
+#### Smart Drive Insights
+Analyze your driving efficiency with "Golden Foot" scoring, safety distance analysis, and low temperature regeneration alerts.
 
-## 🚀 快速启动 Quick Start
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/showcase/insights/en/91shots_so.png" width="250" alt="Drive Insights">
+  <img src="https://www.mytess.net/screenshots/showcase/insights/en/181shots_so.png" width="250" alt="Drive Analysis">
+</p>
 
+#### Intelligent Charging Cost Calculation
+Geofence-based automatic location identification with time-of-use (ToU) pricing support. Batch cost updates for historical data.
 
-### 本地内网部署步骤 Deployment
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/showcase/costManagement/en/640shots_so.png" width="250" alt="Charging Costs">
+  <img src="https://www.mytess.net/screenshots/showcase/costManagement/en/297shots_so.png" width="250" alt="Cost Management">
+</p>
 
-本项目提供两种部署方式：
+#### Interactive Map Mode
+Visualize all drive routes on map with timeline selector for trip exploration and detailed elevation insights.
 
-| 版本 | 文件 | 说明 |
-|------|------|------|
-| **普通版本** | `docker-compose.yml` | 基础版本，包含 TeslaMate + Grafana |
-| **Mytesla 版本** | `docker-compose-with-mytesla.yml` | 集成 Mytesla Dash，现代化看板替代 Grafana |
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/showcase/mapMode/en/721shots_so.png" width="250" alt="Map Mode">
+  <img src="https://www.mytess.net/screenshots/showcase/mapMode/en/258shots_so.png" width="250" alt="Route Visualization">
+</p>
 
----
+#### Real-time Notifications
+Charging status alerts with Live Activity support on Dynamic Island and navigation sync.
 
-## 📊 Mytesla Dash - Grafana 替代方案
+<p align="center">
+  <img src="https://www.mytess.net/screenshots/showcase/notifications/en/491shots_so.png" width="250" alt="Notifications">
+  <img src="https://www.mytess.net/screenshots/showcase/notifications/en/94shots_so.png" width="250" alt="Live Activity">
+</p>
 
-[Mytesla Dash](https://dash.mytesla.cc) 是一个现代化的 Tesla 数据看板，可以完美替代 Grafana 作为日常使用的数据展示界面。
+#### Privacy First
+All data stays on your own server with no third-party data sharing. Direct connection to your TeslaMate instance.
 
-### 为什么选择 Mytesla Dash？
-
-- **现代化 UI** - 简洁美观的界面设计，移动端友好
-- **开箱即用** - 无需复杂的 Grafana 仪表盘配置
-- **实时监控** - 车辆状态、充电进度实时展示
-- **数据分析** - 行程记录、能耗统计、充电费用一目了然
-- **地理围栏** - 支持自定义地理围栏，自动识别充电地点
-- **分时计费** - 峰谷电价自动计算，精确统计充电成本
-
-### 授权说明
-
-> **注意**：Mytesla Dash 需要一次性授权才能使用，首次访问时会引导完成授权流程。
->
-> 获取授权码：[小红书 Mytesla 授权](https://www.xiaohongshu.com/goods-detail/688dbe5f02d7b00001179ed2)
-
-### 界面预览
-
-<!-- 图片1: Dashboard 主界面 -->
-![Dashboard 主界面](images/923shots_so.png)
-
-<!-- 图片2: 记录 -->
-![记录](images/650shots_so.png)
-
-<!-- 图片3: 充电统计 -->
-![统计](images/148shots_so.png)
+**Download:** [App Store](https://apps.apple.com/app/id6757828502) | **Website:** [mytess.net](https://mytess.net)
 
 ---
 
-## 🔐 反向代理与认证安全
+## About This Repository
 
-`docker-compose-with-mytesla.yml` 采用 **Traefik + ForwardAuth** 架构，提供企业级的安全防护：
+This repository provides:
+- Docker Compose configurations for TeslaMate deployment
+- Pre-configured TeslaMateAPI for Mytess iOS app connectivity
+- Enhanced deployment with modern web interface and unified authentication
 
-### 架构说明
+## Why These Deployment Scripts?
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        用户请求                              │
-└─────────────────────────┬───────────────────────────────────┘
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 Traefik (反向代理)                           │
-│  - 统一入口 (端口 80)                                        │
-│  - 路由分发                                                  │
-│  - 中间件处理                                                │
-└─────────────────────────┬───────────────────────────────────┘
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Auth Service (认证服务)                         │
-│  - Cookie-based 会话认证                                     │
-│  - 登录/登出管理                                             │
-│  - ForwardAuth 中间件                                        │
-└─────────────────────────┬───────────────────────────────────┘
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    后端服务                                  │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
-│  │TeslaMate │  │  Dash    │  │ Grafana  │  │   API    │    │
-│  │/teslamate│  │    /     │  │ /grafana │  │  /panel  │    │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘    │
-└─────────────────────────────────────────────────────────────┘
-```
+- **Mytess-Ready**: Pre-configured TeslaMateAPI for seamless Mytess app connectivity
+- **Modern Interface**: Optional Mytesla Dash with unified authentication
+- **One-Command Deployment**: Get TeslaMate running in minutes
 
-### 安全特性
+## Quick Start
 
-| 组件 | 作用 |
-|------|------|
-| **Traefik** | 反向代理，统一管理所有服务的入口，隐藏内部服务端口 |
-| **Auth Service** | 提供统一的登录认证，保护敏感数据不被未授权访问 |
-| **ForwardAuth** | 每个请求都会先经过认证服务验证，确保只有登录用户才能访问 |
-| **路径隔离** | 不同服务使用不同路径，互不干扰 |
-
-### 访问路径
-
-- `/` - Mytesla Dash 主界面（需要登录）
-- `/teslamate` - TeslaMate 管理界面（需要登录）
-- `/grafana` - Grafana 仪表盘
-- `/login` - 登录页面
-- `/logout` - 登出
-- `/settings` - 设置页面
-
----
-
-## 🚀 部署指南
-
-### 方式一：普通版本（TeslaMate + Grafana）
+### Option 1: Official TeslaMate (International Users)
+Uses official TeslaMate images. Suitable for international users.
 
 ```bash
-# 克隆仓库
-git clone https://github.com/gococonut/teslamate-cn-docker.git
-cd teslamate-cn-docker
-
-# 启动服务
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose up -d
 ```
 
-### 方式二：Mytesla 版本（推荐）
+**Access points:**
+- TeslaMate: `http://your-ip:4000`
+- Grafana: `http://your-ip:3000`
+- TeslaMateAPI: `http://your-ip:3030`
+
+### Option 2: Mytesla Enhanced Version (Recommended)
+Official TeslaMate/Grafana with Mytesla enhancement components.
 
 ```bash
-# 克隆仓库
-git clone https://github.com/gococonut/teslamate-cn-docker.git
-cd teslamate-cn-docker
-
-# 启动服务
+git clone https://github.com/yekk-me/teslamate-mytess-docker.git
+cd teslamate-mytess-docker/script
 docker compose -f docker-compose-with-mytesla.yml up -d
 ```
 
-### 访问服务
+**Access points:**
+- Unified entry: `http://your-ip` (redirects to Dashboard)
+- TeslaMate: `http://your-ip/teslamate`
+- Grafana: `http://your-ip/grafana`
+- TeslaMateAPI: `http://your-ip/mytesla/api`
+- Default login: `admin` / `admin123`
 
-- **普通版本**：
-  - TeslaMate: `http://your-ip:4000`
-  - Grafana: `http://your-ip:3000`
+**Image composition**:
+- TeslaMate: `teslamate/teslamate:v2.2` (official)
+- Grafana: `teslamate/grafana:v2.2` (official)
+- Mytesla components: Auth, Dash, TeslaMateAPI, Env-Adapter
 
-- **Mytesla 版本**：
-  - 统一入口: `http://your-ip` （默认跳转到 Dashboard）
-  - TeslaMate: `http://your-ip/teslamate`
-  - Grafana: `http://your-ip/grafana`
-  - TeslaMate API: `http://your-ip/mytesla/api` （无需认证）
-  - 默认登录: 用户名 `admin` / 密码 `admin123`（可在 `http://your-ip/settings` 设置页面修改）
+**Mytesla version advantages**:
+- Official TeslaMate/Grafana for latest updates
+- Traefik reverse proxy with unified authentication
+- Modern Mytesla Dash web interface (mobile-friendly)
+- Enhanced TeslaMateAPI (full Mytess iOS app support)
+- Single-port access to all services
+- Production-ready security architecture
 
----
+## Connecting Mytess to Your TeslaMate
 
-## ⚠️ 重要：安全配置
+1. **Find your TeslaMateAPI endpoint**
+   - Basic version: `http://your-ip:3030`
+   - Mytesla Dash version: `http://your-ip/mytesla/api`
 
-在生产环境部署前，**务必修改**以下重要的环境变量，否则可能导致安全风险：
+2. **Open Mytess app**
+   - Go to Settings → Server Configuration
+   - Enter your server URL
+   - Enter your API token (set in `API_TOKEN` environment variable)
 
-### 🔐 必须修改的环境变量
+3. **Test connection**
+   - Tap "Test Connection"
+   - If successful, you'll see your vehicle data
 
-编辑 `docker-compose-with-mytesla.yml` 文件，修改以下配置：
+## Configuration
 
-#### 1. Auth 服务登录凭据
+### Security Settings (MUST CHANGE)
+
+Before production deployment, change these environment variables:
+
 ```yaml
-auth:
-  environment:
-    - AUTH_USERNAME=admin          # ⚠️ 修改为你的用户名
-    - AUTH_PASSWORD=admin123       # ⚠️ 修改为强密码
-    - SECRET_KEY=mytesla-secret-key-change-me  # ⚠️ 修改为随机字符串（至少 32 位）
+# Authentication (Mytesla Dash version)
+AUTH_USERNAME=admin              # Change this!
+AUTH_PASSWORD=admin123           # Change this!
+SECRET_KEY=change-me-random-32   # Change this!
+
+# TeslaMate encryption
+ENCRYPTION_KEY=change-me-random  # Change this!
+
+# Database
+POSTGRES_PASSWORD=teslamate      # Change this!
+
+# API Token (for Mytess app)
+API_TOKEN=change-me-token        # Change this!
 ```
 
-#### 2. TeslaMate 加密密钥
-```yaml
-teslamate:
-  environment:
-    - ENCRYPTION_KEY=your-encryption-key-change-me  # ⚠️ 修改为随机字符串（至少 32 位）
-```
-
-#### 3. 数据库密码
-```yaml
-database:
-  environment:
-    - POSTGRES_PASSWORD=teslamate  # ⚠️ 修改为强密码
-
-teslamate:
-  environment:
-    - DATABASE_PASS=teslamate      # ⚠️ 与数据库密码保持一致
-```
-
-#### 4. Grafana 管理员密码
-```yaml
-grafana:
-  environment:
-    - GRAFANA_PASSWD=admin123      # ⚠️ 修改为强密码
-    - GF_SECURITY_ADMIN_PASSWORD=admin123  # ⚠️ 修改为强密码
-```
-
-#### 5. TeslaMate API Token
-```yaml
-teslamateapi:
-  environment:
-    - API_TOKEN=PLEASE-CHANGE-THIS-API-TOKEN-IN-PRODUCTION  # ⚠️ 修改为随机字符串
-    - ENCRYPTION_KEY=your-encryption-key-change-me  # ⚠️ 与 TeslaMate 的加密密钥保持一致
-```
-
-### 💡 安全建议
-
-- **生成随机密钥**：使用以下命令生成安全的随机字符串
-  ```bash
-  # Linux/macOS
-  openssl rand -base64 32
-
-  # 或者
-  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
-  ```
-
-- **强密码要求**：
-  - 至少 12 位字符
-  - 包含大小写字母、数字和特殊字符
-  - 避免使用常见密码或个人信息
-
-- **定期更换密码**：建议每 3-6 个月更换一次关键密码
-
-- **备份加密密钥**：`ENCRYPTION_KEY` 用于加密敏感数据（如 Tesla API Token），丢失后无法恢复数据
-
-### 修改后重启服务
-
+**Generate secure keys:**
 ```bash
-# 停止服务
-docker compose -f docker-compose-with-mytesla.yml down
-
-# 重新启动
-docker compose -f docker-compose-with-mytesla.yml up -d
+openssl rand -base64 32
 ```
+
+For detailed configuration instructions, see [script/README.md](script/README.md).
+
+## Architecture
+
+### Basic Version
+```
+┌─────────────┐
+│  TeslaMate  │ ← Collects Tesla data
+└──────┬──────┘
+       │
+┌──────▼──────┐
+│ PostgreSQL  │ ← Stores data
+└──────┬──────┘
+       │
+┌──────▼──────────┐
+│ TeslaMateAPI    │ ← Provides API
+└──────┬──────────┘
+       │
+┌──────▼──────┐
+│   Mytess    │ ← iOS app
+└─────────────┘
+```
+
+### Mytesla Dash Version
+Includes Traefik reverse proxy for unified authentication and modern web dashboard.
+
+## Troubleshooting
+
+### Cannot access from mobile
+- Check firewall allows required ports (80, 3030 for basic; 80 for Mytesla Dash)
+- Verify server is accessible from mobile network
+- Try accessing from browser first
+
+### Mytess connection failed
+- Verify TeslaMateAPI is running: `docker compose ps`
+- Check API_TOKEN matches between config and Mytess app
+- Ensure URL format is correct (include http://)
+
+### Map not loading in TeslaMate
+- Check TeslaMate logs if map doesn't load: `docker compose logs teslamate`
+- Verify network connectivity to OpenStreetMap servers
+
+## Documentation
+
+- **Full Deployment Guide**: [script/README.md](script/README.md)
+- **Mytess Official**: [mytess.net](https://mytess.net)
+- **TeslaMate Docs**: [docs.teslamate.org](https://docs.teslamate.org)
+
+## Community & Support
+
+- **Discord**: [https://discord.com/invite/2DBzQfFPW8](https://discord.com/invite/2DBzQfFPW8)
+- **Email**: hi@mytesla.cc
+
+## FAQ
+
+**Q: Do I need to pay for these scripts?**
+A: No, these deployment scripts are completely free. Mytess is a separate $9.9 iOS app available on the App Store.
+
+**Q: What's the difference between Grafana and Mytesla Dash?**
+A: Grafana provides detailed data visualization with customizable dashboards. Mytesla Dash is a modern, mobile-friendly alternative with unified authentication and simpler setup.
+
+**Q: Does Mytesla Dash require a license?**
+A: Yes, Mytesla Dash requires a one-time authorization. For licensing inquiries, please contact hi@mytesla.cc.
+
+**Q: Can I use Mytess with my existing TeslaMate installation?**
+A: Yes! You only need TeslaMateAPI running. See the [deployment guide](script/README.md) for adding TeslaMateAPI to existing setups.
+
+**Q: Is my data secure?**
+A: Yes! All data stays on your own server. Mytess connects directly to your TeslaMate instance - no third-party servers involved.
+
+## Related Projects
+
+- **TeslaMate**: [github.com/adriankumpf/teslamate](https://github.com/adriankumpf/teslamate)
+- **Mytess**: [mytess.net](https://mytess.net) - Native iOS app for TeslaMate

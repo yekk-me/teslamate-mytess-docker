@@ -1,7 +1,7 @@
 services:
   # ForwardAuth service for Cookie-based authentication
   auth:
-    image: docker.1ms.run/mytesla/auth:latest
+    image: mytesla/auth:latest
     restart: unless-stopped
     environment:
       - AUTH_USERNAME=admin
@@ -26,7 +26,7 @@ services:
       - "traefik.http.middlewares.forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
 
   traefik:
-    image: docker.1ms.run/traefik:v3.6
+    image: traefik:v3.6
     restart: unless-stopped
     command:
       - --api.dashboard=true
@@ -40,11 +40,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
+      # Cache middleware for static assets
+      - "traefik.http.middlewares.dash-cache.headers.customresponseheaders.Cache-Control=public, max-age=31536000, immutable"
     depends_on:
       - auth
 
   teslamate:
-    image: docker.1ms.run/mytesla/teslamate:v2.2
+    image: teslamate/teslamate:v2.2
     restart: always
     depends_on:
       - database
@@ -85,7 +87,7 @@ services:
       - "traefik.http.routers.teslamate.priority=10"
 
   database:
-    image: docker.1ms.run/postgres:18-trixie
+    image: postgres:18-trixie
     restart: always
     environment:
       - POSTGRES_USER=teslamate
@@ -95,7 +97,7 @@ services:
       - postgres-data:/var/lib/postgresql
 
   grafana:
-    image: docker.1ms.run/mytesla/grafana:v2.2
+    image: teslamate/grafana:v2.2
     restart: always
     depends_on:
       - database
@@ -108,7 +110,6 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin123
       - GF_AUTH_ANONYMOUS_ENABLED=false
-      - GF_USERS_DEFAULT_LANGUAGE=zh-CN
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
     volumes:
@@ -120,7 +121,7 @@ services:
       - "traefik.http.routers.grafana.entrypoints=web"
 
   mosquitto:
-    image: docker.1ms.run/eclipse-mosquitto:2
+    image: eclipse-mosquitto:2
     restart: always
     command: mosquitto -c /mosquitto-no-auth.conf
     volumes:
@@ -128,7 +129,7 @@ services:
       - ./data/mosquitto/data:/mosquitto/data
 
   teslamateapi:
-    image: docker.1ms.run/mytesla/teslamateapi:latest
+    image: mytesla/teslamateapi:latest
     restart: unless-stopped
     ports:
       - "3030:8080"
@@ -162,7 +163,7 @@ services:
       - "traefik.http.routers.teslamateapi-mytesla.priority=30"
 
   dash:
-    image: docker.1ms.run/mytesla/dash:latest
+    image: mytesla/dash:latest
     restart: unless-stopped
     depends_on:
       - teslamateapi
@@ -172,10 +173,16 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.dash.loadbalancer.server.port=3000"
-      # Public routes (no auth) - PWA assets
+      # Next.js static assets (no auth, with cache)
+      - "traefik.http.routers.dash-static.rule=PathPrefix(`/_next/static`)"
+      - "traefik.http.routers.dash-static.entrypoints=web"
+      - "traefik.http.routers.dash-static.priority=25"
+      - "traefik.http.routers.dash-static.middlewares=dash-cache"
+      # Public routes (no auth) - PWA assets with cache
       - "traefik.http.routers.dash-public.rule=Path(`/manifest.json`) || PathPrefix(`/images`) || PathRegexp(`^/.*\\.(png|jpg|jpeg|gif|ico|svg|webp)$$`)"
       - "traefik.http.routers.dash-public.entrypoints=web"
       - "traefik.http.routers.dash-public.priority=20"
+      - "traefik.http.routers.dash-public.middlewares=dash-cache"
       - "traefik.http.middlewares.dash-redirect.redirectregex.regex=^/$$"
       - "traefik.http.middlewares.dash-redirect.redirectregex.replacement=/dashboard"
       # Protected routes (with ForwardAuth)
@@ -185,7 +192,7 @@ services:
       - "traefik.http.routers.dash.priority=1"
 
   env-adapter:
-    image: docker.1ms.run/mytesla/env-adapter:latest
+    image: mytesla/env-adapter:latest
     restart: unless-stopped
     volumes:
       - /etc/machine-id:/etc/machine-id:ro
