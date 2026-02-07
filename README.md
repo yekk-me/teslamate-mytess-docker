@@ -1,4 +1,4 @@
-# Mytess TeslaMate Deployment Scripts
+# Mytess（iOS app）TeslaMate Deployment Scripts
 
 [English](README.md) | [中文](README.zh.md)
 
